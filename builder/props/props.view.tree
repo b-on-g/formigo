@@ -39,7 +39,7 @@ $bog_formigo_builder_props $mol_page
 		Content <= Ai_key_input $mol_select
 			value? <=> ai_key? \
 			dictionary <= ai_key_options *
-				\  \None
+				none \None
 				full_name \Full Name
 				first_name \First Name
 				last_name \Last Name
@@ -58,7 +58,7 @@ $bog_formigo_builder_props $mol_page
 		name @ \Options (one per line)
 		Content <= Options_input $mol_textarea
 			value? <=> options_text? \
-			hint @ \Option 1\nOption 2\nOption 3
+			hint @ \One option per line
 	Section_field $mol_form_field
 		name @ \Section
 		Content <= Section_input $mol_string

@@ -1,8 +1,6 @@
 namespace $.$$ {
-
 	export class $bog_formigo_builder_props extends $.$bog_formigo_builder_props {
-
-		@ $mol_mem
+		@$mol_mem
 		override form_rows() {
 			const field = this.field() as $bog_formigo_field_def | null
 			if (!field) return [this.No_field()]
@@ -57,9 +55,12 @@ namespace $.$$ {
 
 		override ai_key(next?: string) {
 			const f = this.get_field()
-			if (!f) return ''
-			if (next !== undefined) f.Ai_key(next)!.val(next)
-			return f.Ai_key()?.val() ?? ''
+			if (!f) return 'none'
+			if (next !== undefined) {
+				const val = next === 'none' ? '' : next
+				f.Ai_key(val)!.val(val)
+			}
+			return f.Ai_key()?.val() || 'none'
 		}
 
 		override options_text(next?: string) {
@@ -78,7 +79,5 @@ namespace $.$$ {
 			if (next !== undefined) f.Section(next)!.val(next)
 			return f.Section()?.val() ?? ''
 		}
-
 	}
-
 }
