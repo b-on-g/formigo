@@ -15,7 +15,7 @@ $bog_formigo_app $mol_book2
 		ai_suggestions <= ai_suggestions *
 	submissions_page!id $bog_formigo_submissions
 		template <= template!id
-	detail_page!id $bog_formigo_detail
+	detail_page!id $bog_formigo_submissions_detail
 		submission <= detail_submission!id $bog_formigo_submission
 		workspace <= workspace
 	settings_page $bog_formigo_settings

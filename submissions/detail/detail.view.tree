@@ -1,4 +1,4 @@
-$bog_formigo_detail $mol_page
+$bog_formigo_submissions_detail $mol_page
 	submission $bog_formigo_submission
 	workspace $bog_formigo_workspace
 	title @ \Submission

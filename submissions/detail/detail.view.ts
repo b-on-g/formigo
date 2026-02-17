@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $bog_formigo_detail extends $.$bog_formigo_detail {
+	export class $bog_formigo_submissions_detail extends $.$bog_formigo_submissions_detail {
 
 		@ $mol_mem
 		template() {

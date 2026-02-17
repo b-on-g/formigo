@@ -1,5 +1,5 @@
 namespace $.$$ {
-	$mol_style_define($bog_formigo_detail, {
+	$mol_style_define($bog_formigo_submissions_detail, {
 		Body_content: {
 			padding: $mol_gap.block,
 			gap: '1rem',

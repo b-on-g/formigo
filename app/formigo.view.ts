@@ -66,10 +66,6 @@ namespace $.$$ {
 			return this.$.$mol_state_arg.link({ fill: id })
 		}
 
-		override ai_extracted(next?: any) {
-			return super.ai_extracted(next)
-		}
-
 		@$mol_mem
 		override ai_suggestions() {
 			return this.ai_extracted() as any
