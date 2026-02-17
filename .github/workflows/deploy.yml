@@ -21,5 +21,6 @@ jobs:
 
             - uses: hyoo-ru/gh-deploy@v4.4.1
               if: github.ref == 'refs/heads/master'
+              continue-on-error: true
               with:
                   folder: "bog/formigo/app/-"
