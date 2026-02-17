@@ -1,0 +1,49 @@
+$bog_formigo_dashboard $mol_page
+	title @ \Formigo
+	workspace $bog_formigo_workspace
+	template_select!id null
+	tools /
+		<= Settings_link $mol_link
+			arg *
+				settings \1
+				template null
+				fill null
+				submissions null
+				submission null
+			sub /
+				<= Settings_icon $mol_icon_cog
+		<= Lights $mol_lights_toggle
+	body /
+		<= Templates $mol_list
+			rows <= template_rows /
+		<= Empty $mol_status
+			sub /
+				\No forms yet. Create your first one!
+	foot /
+		<= Add $mol_button_major
+			title @ \New Form
+			click? <=> add_template? null
+	Template_card*0 $bog_formigo_dashboard_card
+		template_title <= template_title* \
+		template_link <= template_link* \
+		submissions_count <= template_submissions_count* 0
+		published <= template_published* false
+
+$bog_formigo_dashboard_card $mol_link
+	arg *
+		template <= template_link \
+		fill null
+		submissions null
+		submission null
+		settings null
+	sub /
+		<= Title $mol_view
+			sub /
+				<= title \
+		<= Card_status $mol_view
+			sub /
+				<= status_text \
+	template_title \
+	template_link \
+	submissions_count 0
+	published false

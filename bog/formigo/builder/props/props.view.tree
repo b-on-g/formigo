@@ -1,0 +1,66 @@
+$bog_formigo_builder_props $mol_page
+	field null
+	title @ \Field Properties
+	body /
+		<= No_field $mol_status
+			sub /
+				\Select a field to edit
+		<= Form $mol_list
+			rows <= form_rows /
+	Label_field $mol_form_field
+		name @ \Label
+		Content <= Label_input $mol_string
+			value? <=> label? \
+			hint @ \Field label...
+	Type_field $mol_form_field
+		name @ \Type
+		Content <= Type_input $mol_select
+			value? <=> type? \str
+			dictionary <= type_options *
+				str \Text
+				text \Long Text
+				int \Integer
+				real \Number
+				bool \Yes / No
+				enum \Choice
+				date \Date
+				file \File Upload
+	Hint_field $mol_form_field
+		name @ \Hint
+		Content <= Hint_input $mol_string
+			value? <=> hint? \
+			hint @ \Placeholder text...
+	Required_field $mol_form_field
+		name @ \Required
+		Content <= Required_input $mol_check_box
+			checked? <=> required? false
+	Ai_key_field $mol_form_field
+		name @ \AI Key
+		Content <= Ai_key_input $mol_select
+			value? <=> ai_key? \
+			dictionary <= ai_key_options *
+				none \None
+				full_name \Full Name
+				first_name \First Name
+				last_name \Last Name
+				date_of_birth \Date of Birth
+				nationality \Nationality
+				passport_number \Passport Number
+				id_number \ID Number
+				address \Address
+				city \City
+				postal_code \Postal Code
+				country \Country
+				phone \Phone
+				email \Email
+				company \Company
+	Options_field $mol_form_field
+		name @ \Options (one per line)
+		Content <= Options_input $mol_textarea
+			value? <=> options_text? \
+			hint @ \One option per line
+	Section_field $mol_form_field
+		name @ \Section
+		Content <= Section_input $mol_string
+			value? <=> section? \
+			hint @ \Section name...

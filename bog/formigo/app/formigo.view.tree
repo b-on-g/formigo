@@ -1,0 +1,25 @@
+$bog_formigo_app $mol_book2
+	plugins /
+		<= Theme $mol_theme_auto
+	Placeholder $mol_view
+	pages <= spread /
+	template_select!id null
+	menu_page $bog_formigo_dashboard
+		workspace <= workspace $bog_formigo_workspace
+		template_select!id <= template_select!id
+	builder_page!id $bog_formigo_builder
+		template <= template!id $bog_formigo_template
+	filler_page!id $bog_formigo_filler
+		template <= template!id
+		submission <= submission!id $bog_formigo_submission
+		ai_suggestions <= ai_extracted *
+	submissions_page!id $bog_formigo_submissions
+		template <= template!id
+	detail_page!id $bog_formigo_submissions_detail
+		submission <= detail_submission!id $bog_formigo_submission
+		workspace <= workspace
+	settings_page $bog_formigo_settings
+		workspace <= workspace
+	ai_panel $bog_formigo_ai
+		extracted? <=> ai_extracted? *
+		apply_all? <=> ai_apply_all? null

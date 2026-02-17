@@ -1,0 +1,33 @@
+$bog_formigo_submissions $mol_page
+	template $bog_formigo_template
+	title <= page_title @ \Submissions
+	tools /
+		<= Back_link $mol_link
+			arg *
+				submissions null
+				template <= template_link \
+			sub /
+				<= Back_icon $mol_icon_arrow_left
+	body /
+		<= List $mol_list
+			rows <= submission_rows /
+		<= Empty $mol_status
+			sub /
+				\No submissions yet.
+	Submission_card*0 $mol_link
+		arg *
+			submission <= submission_link* \
+			submissions null
+			template null
+			fill null
+			settings null
+		sub /
+			<= Card_respondent*0 $mol_view
+				sub /
+					<= submission_respondent* \
+			<= Card_status*0 $mol_view
+				sub /
+					<= submission_status* \
+			<= Card_date*0 $mol_view
+				sub /
+					<= submission_date* \

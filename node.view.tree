@@ -1,0 +1,1270 @@
+$mol_scroll $mol_view
+	scroll_top? 0
+	scroll_left? 0
+	attr *
+		^
+		tabindex <= tabindex -1
+	event *
+		^
+		scroll?event <=> event_scroll?event null
+
+$mol_book2 $mol_scroll
+	menu_title \
+	sub /$mol_view
+		^ pages <= pages_deep /$mol_view
+		^ placeholders /$mol_view
+			<= Placeholder $mol_view
+	minimal_width 0
+	Gap* $mol_view title \
+
+$mol_theme_auto $mol_plugin
+	light \$mol_theme_light
+	attr * mol_theme <= theme <= dark \$mol_theme_dark
+
+$mol_page $mol_view
+	dom_name \article
+	attr *
+		^
+		tabIndex <= tabindex -1
+	sub /
+		<= Head $mol_view
+			minimal_height 64
+			dom_name \header
+			sub <= head /
+				<= Title $mol_view
+					dom_name \h1
+					sub <= title_content /
+						<= Logo null
+						<= title
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top? => body_scroll_top?
+			sub <= body_content /
+				<= Body_content $mol_view
+					sub <= body /$mol_view
+		<= Foot $mol_view
+			dom_name \footer
+			sub <= foot /$mol_view
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_cog $mol_icon path \M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z
+
+$mol_link $mol_view
+	uri \
+	dom_name \a
+	uri_off \
+	uri_native null
+	external false
+	attr *
+		^
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+		rel <= relation \
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
+
+$mol_speck $mol_view
+	theme \$mol_theme_accent
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click?event null
+	event_click?event null
+	status? /
+	event *
+		^
+		click?event <=> activate?event <=> event_activate?event null
+		dblclick?event <=> clicks?event null
+		keydown?event <=> key_press?event <=> event_key_press?event null
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_check_icon $mol_check
+
+$mol_icon_brightness_4 $mol_icon path \M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z
+
+$mol_lights_toggle $mol_check_icon
+	Icon <= Lights_icon $mol_icon_brightness_4
+	hint @ \Toggle lights
+	checked? <=> lights? false
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
+
+$mol_status $mol_view
+	status <= title
+	minimal_height 24
+	minimal_width 0
+	sub /
+		<= message \
+
+$mol_button_major $mol_button_minor
+	theme \$mol_theme_base
+
+$bog_formigo_dashboard $mol_page
+	title @ \Formigo
+	workspace $bog_formigo_workspace
+	template_select!id null
+	tools /
+		<= Settings_link $mol_link
+			arg *
+				settings \1
+				template null
+				fill null
+				submissions null
+				submission null
+			sub /
+				<= Settings_icon $mol_icon_cog
+		<= Lights $mol_lights_toggle
+	body /
+		<= Templates $mol_list
+			rows <= template_rows /
+		<= Empty $mol_status
+			sub /
+				\No forms yet. Create your first one!
+	foot /
+		<= Add $mol_button_major
+			title @ \New Form
+			click? <=> add_template? null
+	Template_card*0 $bog_formigo_dashboard_card
+		template_title <= template_title* \
+		template_link <= template_link* \
+		submissions_count <= template_submissions_count* 0
+		published <= template_published* false
+
+$bog_formigo_dashboard_card $mol_link
+	arg *
+		template <= template_link \
+		fill null
+		submissions null
+		submission null
+		settings null
+	sub /
+		<= Title $mol_view
+			sub /
+				<= title \
+		<= Card_status $mol_view
+			sub /
+				<= status_text \
+	template_title \
+	template_link \
+	submissions_count 0
+	published false
+
+$mol_icon_eye $mol_icon path \M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z
+
+$mol_icon_format_list_bulleted $mol_icon path \M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z
+
+$mol_icon_earth $mol_icon path \M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z
+
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
+$mol_string $mol_view
+	dom_name \input
+	enabled true
+	minimal_height 40
+	autocomplete false
+	selection? /number
+		0
+		0
+	auto /
+		<= selection_watcher null
+		<= error_report null
+	field *
+		^
+		disabled <= disabled false
+		value <= value_changed? <=> value? \
+		placeholder <= hint_visible <= hint \
+		spellcheck <= spellcheck true
+		autocomplete <= autocomplete_native \
+		selectionEnd <= selection_end 0
+		selectionStart <= selection_start 0
+		inputMode <= keyboard \text
+		enterkeyhint <= enter \go
+	attr *
+		^
+		maxlength <= length_max +Infinity
+		type <= type? \text
+	event *
+		^
+		input?event <=> event_change?event null
+	plugins /
+		<= Submit $mol_hotkey
+			mod_ctrl <= submit_with_ctrl false
+			key * enter?event <=> submit?event null
+
+$mol_labeler $mol_list
+	rows /
+		<= Label $mol_view
+			minimal_height 32
+			sub <= label /$mol_view_content
+				<= title
+		<= Content $mol_view
+			minimal_height 24
+			sub <= content /
+
+$mol_form_field $mol_labeler
+	bids /string
+	label /
+		<= name \
+		<= Bid $mol_view
+			sub / <= bid \
+	content / <= control null
+
+$mol_stack $mol_view
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 7
+	width_limit +Infinity
+	row_width 0
+	sub / <= title
+
+$mol_dimmer $mol_paragraph
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low* $mol_paragraph
+		sub /
+			<= string* \
+	High* $mol_paragraph
+		sub /
+			<= string* \
+
+$mol_text_code_token $mol_dimmer
+	attr *
+		^
+		mol_text_code_token_type <= type \
+
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= uri \
+		target \_blank
+
+$mol_text_code_line $mol_paragraph
+	text \
+	minimal_height 24
+	numb_showed true
+	syntax null
+	uri_resolve* \
+	Numb $mol_view
+		sub /
+			<= numb 0
+	Token* $mol_text_code_token
+		type <= token_type* \
+		haystack <= token_text* \
+		needle <= highlight \
+	Token_link* $mol_text_code_token_link
+		haystack <= token_text* \
+		needle <= highlight \
+		uri <= token_uri* \
+	find_pos* null
+
+$mol_icon_clipboard $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3
+
+$mol_icon_clipboard_outline $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M7,7H17V5H19V19H5V5H7V7Z
+
+$mol_button_copy $mol_button_minor
+	blobs /$mol_blob
+		<= text_blob? $mol_blob /
+			/BlobPart <= text <= title
+			* type \text/plain
+		<= html_blob? $mol_blob /
+			/BlobPart <= html \
+			* type \text/html
+	data *
+	sub /
+		<= Icon $mol_icon_clipboard_outline
+		<= title \
+
+$mol_text_code $mol_stack
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	find_pos* null
+	uri_base \
+	row_themes /string
+	sub /
+		<= Rows $mol_list
+			render_visible_only <= render_visible_only false
+			rows <= rows /
+				<= Row*0 $mol_text_code_line
+					numb_showed <= sidebar_showed
+					numb <= row_numb* 0
+					theme <= row_theme* \
+					text <= row_text* \
+					syntax <= syntax null
+					uri_resolve* <= uri_resolve* \
+					highlight <= highlight \
+		<= Copy $mol_button_copy
+			hint @ \Copy whole code
+			text <= text_export \
+
+$mol_textarea $mol_stack
+	attr *
+		^
+		mol_textarea_clickable <= clickable? false
+		mol_textarea_sidebar_showed <= sidebar_showed false
+	event *
+		keydown?event <=> press?event null
+		pointermove?event <=> hover?event null
+	sub /
+		<= Edit $mol_textarea_edit
+			value? <=> value? \
+			hint <= hint \ 
+			enabled <= enabled true
+			spellcheck <= spellcheck true
+			length_max <= length_max +Infinity
+			selection? <=> selection? /number
+			bring => bring
+			submit? <=> submit? null
+			submit_with_ctrl <= submit_with_ctrl true
+		<= View $mol_text_code
+			text <= value
+			render_visible_only false
+			row_numb* <= row_numb* 0
+			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
+			syntax <= syntax $mol_syntax2
+	symbols_alt *string
+		comma \<
+		period \>
+		dash \−
+		equals \≈
+		graveAccent \́
+		forwardSlash \÷
+		E \€
+		V \✔
+		X \×
+		C \©
+		P \§
+		H \₽
+		key0 \°
+		key8 \•
+		key2 \@
+		key3 \#
+		key4 \$
+		key6 \^
+		key7 \&
+		bracketOpen \[
+		bracketClose \]
+		slashBack \|
+	symbols_alt_ctrl *string
+		space \ 
+	symbols_alt_shift *string
+		V \✅
+		X \❌
+		O \⭕
+		key1 \❗
+		key4 \💲
+		key7 \❓
+		comma \«
+		period \»
+		semicolon \“
+		quoteSingle \”
+		dash \—
+		equals \≠
+		graveAccent \̱
+		bracketOpen \{
+		bracketClose \}
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	enter \enter
+	field *
+		^
+		scrollTop 0
+
+$mol_icon_drag $mol_icon path \M7,19V17H9V19H7M11,19V17H13V19H11M15,19V17H17V19H15M7,15V13H9V15H7M11,15V13H13V15H11M15,15V13H17V15H15M7,11V9H9V11H7M11,11V9H13V11H11M15,11V9H17V11H15M7,7V5H9V7H7M11,7V5H13V7H11M15,7V5H17V7H15Z
+
+$mol_icon_drag_horizontal $mol_icon path \M3,15V13H5V15H3M3,11V9H5V11H3M7,15V13H9V15H7M7,11V9H9V11H7M11,15V13H13V15H11M11,11V9H13V11H11M15,15V13H17V15H15M15,11V9H17V11H15M19,15V13H21V15H19M19,11V9H21V11H19Z
+
+$mol_icon_drag_horizontal_variant $mol_icon path \M21 11H3V9H21V11M21 13H3V15H21V13Z
+
+$mol_icon_pencil $mol_icon path \M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z
+
+$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
+
+$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
+
+$bog_formigo_builder_field $mol_view
+	field_index 0
+	field_label \
+	field_type \str
+	field_required false
+	field_select!index null
+	field_remove!index null
+	sub /
+		<= Drag_icon $mol_icon_drag_horizontal_variant
+		<= Required_mark $mol_view
+			sub /
+				<= required_mark \
+		<= Label $mol_view
+			sub /
+				<= field_label
+		<= Type_badge $mol_view
+			sub /
+				<= field_type
+		<= Select $mol_button_minor
+			click? <=> select_click? null
+			sub /
+				<= Select_icon $mol_icon_pencil
+		<= Remove $mol_button_minor
+			click? <=> remove_click? null
+			sub /
+				<= Remove_icon $mol_icon_trash_can_outline
+
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	align /number
+		-.5
+		-.5
+	offset /number
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	align \bottom_center
+	prefer \vert
+	auto /
+		<= bubble null
+	sub /
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Follower $mol_follower
+			offset <= bubble_offset /number
+				0
+				1
+			align <= bubble_align /number
+				0
+				0
+			Anchor <= Anchor
+			Sub <= Bubble $mol_pop_bubble
+				content <= bubble_content /$mol_view_content
+				height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		tabindex 0
+		popover \manual
+
+$mol_pick $mol_pop
+	event *
+		^
+		keydown?event <=> keydown?event null
+	Anchor <= Trigger $mol_check
+		minimal_width 40
+		minimal_height 40
+		enabled <= trigger_enabled true
+		checked? <=> showed?
+		clicks? <=> clicks? null
+		sub <= trigger_content /$mol_view_content
+			<= title
+		hint <= hint \
+
+$mol_nav $mol_plugin
+	cycle? false
+	-
+	mod_ctrl false
+	mod_shift false
+	mod_alt false
+	-
+	keys_x? /
+	keys_y? /
+	-
+	current_x? null
+	current_y? null
+	-
+	event_up?event null
+	event_down?event null
+	event_left?event null
+	event_right?event null
+	event *
+		^
+		keydown?event <=> event_key?event null
+
+$mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
+
+$mol_search $mol_pop
+	query? \
+	suggests /string
+	plugins /$mol_plugin
+		^
+		<= Hotkey $mol_hotkey
+			key * escape? <=> clear? null
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> nav_focused?component null
+	showed? <=> suggests_showed? false
+	align_hor \right
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value? <=> query? \
+				hint <= hint @ \Search...
+				submit?event <=> submit?event null
+				enabled <= enabled true
+				keyboard <= keyboard \search
+				enter <= enter \search
+				bring => bring
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				enabled <= enabled true
+				click?event <=> clear?event null
+				sub /
+					<= Clear_icon $mol_icon_close
+	bubble_content /$mol_view_content
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_items /$mol_view
+	Suggest* $mol_button_minor
+		click?event <=> suggest_select*?event null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
+				needle <= query? \
+
+$mol_icon_dots_vertical $mol_icon path \M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z
+
+$mol_select $mol_pick
+	dictionary? *
+	options /string
+	value? \
+	option_label_default \
+	Option_row* $mol_button_minor
+		enabled <= enabled true
+		event_click?event <=> event_select*?event null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
+				needle <= filter_pattern? \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle? <=> nav_cycle? true
+	hint @ \Pick..
+	bubble_content /
+		<= Filter
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_content /$mol_view
+	Filter $mol_search
+		query? <=> filter_pattern? \
+		hint <= filter_hint @ \Filter..
+		submit?event <=> submit?event null
+		enabled <= enabled true
+	Trigger_icon $mol_icon_dots_vertical
+	trigger_enabled <= enabled
+
+$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$bog_formigo_builder_props $mol_page
+	field null
+	title @ \Field Properties
+	body /
+		<= No_field $mol_status
+			sub /
+				\Select a field to edit
+		<= Form $mol_list
+			rows <= form_rows /
+	Label_field $mol_form_field
+		name @ \Label
+		Content <= Label_input $mol_string
+			value? <=> label? \
+			hint @ \Field label...
+	Type_field $mol_form_field
+		name @ \Type
+		Content <= Type_input $mol_select
+			value? <=> type? \str
+			dictionary <= type_options *
+				str \Text
+				text \Long Text
+				int \Integer
+				real \Number
+				bool \Yes / No
+				enum \Choice
+				date \Date
+				file \File Upload
+	Hint_field $mol_form_field
+		name @ \Hint
+		Content <= Hint_input $mol_string
+			value? <=> hint? \
+			hint @ \Placeholder text...
+	Required_field $mol_form_field
+		name @ \Required
+		Content <= Required_input $mol_check_box
+			checked? <=> required? false
+	Ai_key_field $mol_form_field
+		name @ \AI Key
+		Content <= Ai_key_input $mol_select
+			value? <=> ai_key? \
+			dictionary <= ai_key_options *
+				none \None
+				full_name \Full Name
+				first_name \First Name
+				last_name \Last Name
+				date_of_birth \Date of Birth
+				nationality \Nationality
+				passport_number \Passport Number
+				id_number \ID Number
+				address \Address
+				city \City
+				postal_code \Postal Code
+				country \Country
+				phone \Phone
+				email \Email
+				company \Company
+	Options_field $mol_form_field
+		name @ \Options (one per line)
+		Content <= Options_input $mol_textarea
+			value? <=> options_text? \
+			hint @ \One option per line
+	Section_field $mol_form_field
+		name @ \Section
+		Content <= Section_input $mol_string
+			value? <=> section? \
+			hint @ \Section name...
+
+$mol_row $mol_view
+
+$mol_form $mol_list
+	submit_allowed true
+	submit_blocked false
+	event *
+		^
+		keydown?event <=> keydown?event null
+	save?event null
+	message_done @ \Saved
+	errors *string
+		\Form invalid
+			<= form_invalid @ \Form is not valid
+	rows /
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
+		<= Foot $mol_row
+			sub <= foot <= buttons /$mol_view
+				<= Submit $mol_button_major
+					title <= submit_title @ \Save
+					hint <= submit_hint \
+					activate? => submit_activate?
+					click? <=> submit? null
+				<= Result $mol_status
+					message <= result? null
+
+$bog_formigo_builder $mol_page
+	template $bog_formigo_template
+	title <= form_title \
+	tools /
+		<= Preview $mol_link
+			arg *
+				fill <= template_link
+				template null
+				submissions null
+				submission null
+				settings null
+			sub /
+				<= Preview_icon $mol_icon_eye
+		<= Submissions_link $mol_link
+			arg *
+				submissions <= template_link \
+				template null
+				fill null
+				submission null
+				settings null
+			sub /
+				<= Submissions_icon $mol_icon_format_list_bulleted
+		<= Publish $mol_check_icon
+			checked? <=> published? false
+			Icon <= Publish_icon $mol_icon_earth
+	body /
+		<= Title_field $mol_form_field
+			name @ \Form Title
+			Content <= Title_input $mol_string
+				value? <=> form_title_edit? \
+				hint @ \Enter form title...
+		<= Description_field $mol_form_field
+			name @ \Description
+			Content <= Description_input $mol_textarea
+				value? <=> description? \
+				hint @ \Form description...
+		<= Fields_label $mol_labeler
+			title @ \Fields
+			Content <= Fields $mol_list
+				rows <= field_rows /
+		<= Add_field $mol_button_major
+			title @ \Add Field
+			click? <=> add_field? null
+	selected? null
+	Field_row*0 $bog_formigo_builder_field
+		field_index <= field_index* 0
+		field_label <= field_label* \
+		field_type <= field_type* \str
+		field_required <= field_required* false
+		field_select!index <=> field_select!index null
+		field_remove!index <=> field_remove!index null
+	Props $bog_formigo_builder_props
+		field <= selected_field null
+
+$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+
+$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
+
+$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	boost 10
+	value_min -Infinity
+	value_max +Infinity
+	value? +NaN
+	enabled true
+	plugins /
+		<= Hotkey $mol_hotkey
+			key *
+				down? <=> event_dec? null
+				up? <=> event_inc? null
+				pageDown? <=> event_dec_boost? null
+				pageUp? <=> event_inc_boost? null
+	sub /
+		<= Dec $mol_button_minor
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled
+			sub / <= dec_icon $mol_icon_chevron_left
+		<= String $mol_string
+			- \ we don't want native number controls in mobile devices
+			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+			type <= type \text
+			keyboard \decimal
+			value? <=> value_string? \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled
+			submit? <=> submit? null
+		<= Inc $mol_button_minor
+			event_click? <=> event_inc? null
+			enabled <= inc_enabled <= enabled
+			sub / <= inc_icon $mol_icon_chevron_right
+
+$mol_check_list $mol_view
+	dictionary *
+	Option* $mol_check
+		checked? <=> option_checked*? false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value? \
+
+$mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
+
+$mol_icon_calendar_today $mol_icon path \M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z
+
+$mol_format $mol_string
+	allow \0123456789
+	hint <= mask*0 \
+	keyboard \numeric
+
+$mol_hor $mol_view
+
+$mol_calendar $mol_list
+	sub /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_view
+					minimal_height 24
+					sub /
+						<= title \
+		<= Weekdays $mol_hor
+			sub <= weekdays /$mol_view
+	weeks /$mol_view
+	weeks_count 6
+	-
+	Weekday* $mol_calendar_day
+		holiday <= weekend* false
+		sub /
+			<= weekday* \
+	-
+	Week* $mol_hor
+		sub <= week_days* /$mol_view
+	-
+	Day* $mol_calendar_day
+		ghost <= day_ghost* false
+		holiday <= day_holiday* false
+		selected <= day_selected* false
+		today <= day_today* false
+		theme <= day_theme* null
+		sub <= day_content* /
+			<= day_text* \
+	-
+	month_string \
+	month_moment $mol_time_moment
+
+$mol_calendar_day $mol_view
+	minimal_height 24
+	minimal_width 36
+	attr *
+		mol_calendar_holiday <= holiday false
+		mol_calendar_ghost <= ghost false
+		mol_calendar_selected <= selected false
+		mol_calendar_today <= today false
+		mol_theme <= theme null
+
+$mol_date $mol_pick
+	Icon $mol_icon_calendar
+	-
+	bubble_content /
+		<= Input_row $mol_view sub <= input_content /
+			<= Today $mol_button_minor
+				hint @ \Today
+				enabled <= enabled true
+				click?event <=> today_click?event null
+				sub /
+					<= Today_icon $mol_icon_calendar_today
+			<= Input $mol_format
+				value? <=> value? \
+				value_changed? => value_changed?
+				mask* <= input_mask* \
+				enabled <= enabled true
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				enabled <= enabled true
+				click?event <=> clear?event null
+				sub /
+					<= Clear_icon $mol_icon_trash_can_outline
+		<= Calendar $mol_date_calendar
+			enabled <= enabled true
+			month_moment <= month_moment <= value_moment
+			day_selected* <= day_selected* false
+			day_click*?event <=> day_click*?event null
+			Title => Calendar_title
+			head /
+				<= Calendar_tools $mol_view
+					sub /
+						<= Prev $mol_button_minor
+							hint <= prev_hint @ \Previous month
+							click?event <=> prev?event null
+							sub /
+								<= Prev_icon $mol_icon_chevron_left
+						<= Calendar_title
+						<= Next $mol_button_minor
+							hint <= next_hint @ \Next month
+							click?event <=> next?event null
+							sub /
+								<= Next_icon $mol_icon_chevron_right
+	-
+	value_number? +NaN
+	value_moment? $mol_time_moment
+
+$mol_date_calendar $mol_calendar
+	day_content* /
+		<= Day_button* $mol_button_minor
+			title <= day_text*
+			event_click?event <=> day_click*?event null
+			minimal_height 24
+			enabled <= enabled true
+
+$mol_image $mol_view
+	dom_name \img
+	attr *any
+		^
+		src <= uri \
+		title <= hint
+		alt <= title \
+		loading <= loading \lazy
+		decoding <= decoding \async
+		crossOrigin <= cors null
+		width <= natural_width 0
+		height <= natural_height 0
+	event *any
+		load? <=> load? null
+	minimal_width 16
+	minimal_height 16
+
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
+
+$mol_button_open $mol_button_minor
+	sub /
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files? <=> files_handled? <=> files? /File
+			accept <= accept \
+			multiple <= multiple true
+
+$mol_button_open_native $mol_view
+	dom_name \input
+	files? /File
+	attr *
+		type \file
+		accept <= accept \
+		multiple <= multiple true
+	event *
+		change?next <=> picked?next null
+
+$mol_attach $mol_view
+	items? /string
+	sub <= content /$mol_view
+		<= Item*0 $mol_button_minor
+			click?event <=> item_drop*?event null
+			sub /
+				<= Image* $mol_image
+					title \
+					uri <= item_uri* \
+		<= Add $mol_button_open
+			title <= attach_title \
+			files? <=> attach_new? null
+
+$bog_formigo_filler_step $mol_list
+	field_def null
+	value? \
+	ai_suggestion \
+	apply_suggestion!index null
+	rows <= content /
+	Label $mol_view
+		sub /
+			<= label \
+	Hint $mol_view
+		sub /
+			<= hint \
+	Required_badge $mol_view
+		sub /
+			<= required_text \
+	Suggestion $mol_button_minor
+		title <= suggestion_text \
+		click? <=> apply_click? null
+	String_input $mol_string
+		value? <=> value?
+		hint <= hint
+	Textarea_input $mol_textarea
+		value? <=> value?
+		hint <= hint
+	Number_input $mol_number
+		value? <=> number_value? +NaN
+	Check_input $mol_switch
+		value? <=> value?
+		dictionary *
+			yes \Yes
+			no \No
+	Select_input $mol_switch
+		value? <=> value?
+		dictionary <= enum_options *
+	Date_input $mol_date
+		value? <=> value?
+	File_input $mol_attach
+		items? <=> file_items? /string
+
+$bog_formigo_filler $mol_page
+	template $bog_formigo_template
+	submission $bog_formigo_submission
+	ai_suggestions *
+	title <= form_title \
+	tools /
+		<= Progress $mol_view
+			sub /
+				<= progress_text \
+	body /
+		<= Steps $mol_list
+			rows <= step_rows /
+	foot /
+		<= Nav $mol_view
+			sub /
+				<= Back $mol_button_minor
+					title @ \Back
+					click? <=> back? null
+				<= Step_counter $mol_view
+					sub /
+						<= step_counter_text \
+				<= Next $mol_button_major
+					title <= next_title @ \Next
+					click? <=> next? null
+	current_step? 0
+	Step*0 $bog_formigo_filler_step
+		field_def <= step_field* null
+		value? <=> step_value*? \
+		ai_suggestion <= step_ai_suggestion* \
+		apply_suggestion!index <=> apply_suggestion!index null
+	Review_page $mol_view
+		sub /
+			<= Review_title $mol_view
+				sub / @ \Thank you! Your form has been submitted.
+
+$mol_icon_arrow_left $mol_icon path \M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z
+
+$bog_formigo_submissions $mol_page
+	template $bog_formigo_template
+	title <= page_title @ \Submissions
+	tools /
+		<= Back_link $mol_link
+			arg *
+				submissions null
+				template <= template_link \
+			sub /
+				<= Back_icon $mol_icon_arrow_left
+	body /
+		<= List $mol_list
+			rows <= submission_rows /
+		<= Empty $mol_status
+			sub /
+				\No submissions yet.
+	Submission_card*0 $mol_link
+		arg *
+			submission <= submission_link* \
+			submissions null
+			template null
+			fill null
+			settings null
+		sub /
+			<= Card_respondent*0 $mol_view
+				sub /
+					<= submission_respondent* \
+			<= Card_status*0 $mol_view
+				sub /
+					<= submission_status* \
+			<= Card_date*0 $mol_view
+				sub /
+					<= submission_date* \
+
+$mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
+
+$mol_button_download $mol_button_minor
+	blob null
+	uri \
+	file_name \blob.bin
+	sub /
+		<= Icon $mol_icon_download
+		<= title \
+
+$bog_formigo_submissions_detail $mol_page
+	submission $bog_formigo_submission
+	workspace $bog_formigo_workspace
+	title @ \Submission
+	tools /
+		<= Export $mol_button_download
+			blob <= export_blob null
+			file_name <= export_name \form.doc
+			sub /
+				<= Export_icon $mol_icon_download
+				\Export Word
+	body /
+		<= Info $mol_list
+			rows <= info_rows /
+		<= Fields $mol_list
+			rows <= field_rows /
+	Respondent_label $mol_labeler
+		title @ \Respondent
+		Content <= Respondent_value $mol_view
+			sub / <= respondent \
+	Status_label $mol_labeler
+		title @ \Status
+		Content <= Status_value $mol_view
+			sub / <= status \
+	Date_label $mol_labeler
+		title @ \Submitted
+		Content <= Date_value $mol_view
+			sub / <= date_text \
+	Field_row*0 $mol_labeler
+		title <= field_label* \
+		Content <= Field_value*0 $mol_view
+			sub / <= field_value* \
+
+$bog_formigo_settings $mol_page
+	workspace $bog_formigo_workspace
+	title @ \Settings
+	body /
+		<= Brand_section $mol_labeler
+			title @ \Branding
+			Content <= Brand_form $mol_list
+				rows /
+					<= Name_field $mol_form_field
+						name @ \Company Name
+						Content <= Name_input $mol_string
+							value? <=> company_name? \
+							hint @ \Your company name...
+					<= Hue_field $mol_form_field
+						name @ \Theme Color (0-360)
+						Content <= Hue_input $mol_number
+							value? <=> hue? +NaN
+							precision 1
+							value_min 0
+							value_max 360
+					<= Hue_preview $mol_view
+						sub / <= hue_preview_text \
+		<= Auth_section $mol_labeler
+			title @ \Authentication
+			Content <= Auth_info $mol_list
+				rows /
+					<= Auth_warning $mol_view
+						sub / @ \Your identity is stored locally. Back up your auth key to avoid losing access.
+					<= Auth_key_label $mol_labeler
+						title @ \Your Auth Key
+						Content <= Auth_key $mol_view
+							sub / <= auth_key_text \
+
+$bog_formigo_ai $mol_list
+	Model? $mol_github_model
+		params * temperature 0
+		rules <= rules \You are a document data extraction assistant. The user uploads images of identity documents (passports, utility bills, ID cards, bank statements). Extract all personal data into structured JSON. Return: {"full_name":"...","first_name":"...","last_name":"...","date_of_birth":"...","nationality":"...","passport_number":"...","id_number":"...","address":"...","city":"...","postal_code":"...","country":"...","phone":"...","email":"...","company":"..."}. Only include fields you can confidently extract. Values should be in the language they appear in the document.
+	extracted? *
+	rows <= content /
+	Title $mol_view
+		sub / @ \AI Document Scanner
+	Docs $mol_attach
+		items? <=> doc_items? /string
+	Extract $mol_button_major
+		title @ \Extract Data
+		click? <=> extract? null
+	Status $mol_status
+		status <= communication null
+	Results $mol_list
+		rows <= result_rows /
+	Result_row*0 $mol_labeler
+		title <= result_key* \
+		Content <= Result_value* $mol_view
+			sub / <= result_val* \
+	Apply_all $mol_button_major
+		title @ \Apply All to Form
+		click? <=> apply_all? null
+
+$bog_formigo_app $mol_book2
+	plugins /
+		<= Theme $mol_theme_auto
+	Placeholder $mol_view
+	pages <= spread /
+	template_select!id null
+	menu_page $bog_formigo_dashboard
+		workspace <= workspace $bog_formigo_workspace
+		template_select!id <= template_select!id
+	builder_page!id $bog_formigo_builder
+		template <= template!id $bog_formigo_template
+	filler_page!id $bog_formigo_filler
+		template <= template!id
+		submission <= submission!id $bog_formigo_submission
+		ai_suggestions <= ai_extracted *
+	submissions_page!id $bog_formigo_submissions
+		template <= template!id
+	detail_page!id $bog_formigo_submissions_detail
+		submission <= detail_submission!id $bog_formigo_submission
+		workspace <= workspace
+	settings_page $bog_formigo_settings
+		workspace <= workspace
+	ai_panel $bog_formigo_ai
+		extracted? <=> ai_extracted? *
+		apply_all? <=> ai_apply_all? null

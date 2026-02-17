@@ -1,0 +1,32 @@
+$bog_formigo_settings $mol_page
+	workspace $bog_formigo_workspace
+	title @ \Settings
+	body /
+		<= Brand_section $mol_labeler
+			title @ \Branding
+			Content <= Brand_form $mol_list
+				rows /
+					<= Name_field $mol_form_field
+						name @ \Company Name
+						Content <= Name_input $mol_string
+							value? <=> company_name? \
+							hint @ \Your company name...
+					<= Hue_field $mol_form_field
+						name @ \Theme Color (0-360)
+						Content <= Hue_input $mol_number
+							value? <=> hue? +NaN
+							precision 1
+							value_min 0
+							value_max 360
+					<= Hue_preview $mol_view
+						sub / <= hue_preview_text \
+		<= Auth_section $mol_labeler
+			title @ \Authentication
+			Content <= Auth_info $mol_list
+				rows /
+					<= Auth_warning $mol_view
+						sub / @ \Your identity is stored locally. Back up your auth key to avoid losing access.
+					<= Auth_key_label $mol_labeler
+						title @ \Your Auth Key
+						Content <= Auth_key $mol_view
+							sub / <= auth_key_text \

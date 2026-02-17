@@ -1,0 +1,26 @@
+$bog_formigo_builder_field $mol_view
+	field_index 0
+	field_label \
+	field_type \str
+	field_required false
+	field_select!index null
+	field_remove!index null
+	sub /
+		<= Drag_icon $mol_icon_drag_horizontal_variant
+		<= Required_mark $mol_view
+			sub /
+				<= required_mark \
+		<= Label $mol_view
+			sub /
+				<= field_label
+		<= Type_badge $mol_view
+			sub /
+				<= field_type
+		<= Select $mol_button_minor
+			click? <=> select_click? null
+			sub /
+				<= Select_icon $mol_icon_pencil
+		<= Remove $mol_button_minor
+			click? <=> remove_click? null
+			sub /
+				<= Remove_icon $mol_icon_trash_can_outline
