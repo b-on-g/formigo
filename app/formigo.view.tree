@@ -3,9 +3,10 @@ $bog_formigo_app $mol_book2
 		<= Theme $mol_theme_auto
 	Placeholder $mol_view
 	pages <= spread /
+	template_select!id null
 	menu_page $bog_formigo_dashboard
 		workspace <= workspace $bog_formigo_workspace
-		template_select!id null
+		template_select!id <= template_select!id
 	builder_page!id $bog_formigo_builder
 		template <= template!id $bog_formigo_template
 	filler_page!id $bog_formigo_filler
