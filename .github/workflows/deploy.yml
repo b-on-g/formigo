@@ -16,7 +16,6 @@ jobs:
         steps:
             - uses: hyoo-ru/mam_build@master2
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
                   package: "bog/formigo"
                   modules: "app"
 
