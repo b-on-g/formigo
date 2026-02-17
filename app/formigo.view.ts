@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $bog_formigo_app extends $.$bog_formigo_app {
 		@$mol_mem
 		override workspace() {
-			return this.$.$giper_baza_glob.home($bog_formigo_workspace)
+			return this.$.$giper_baza_glob.home($bog_formigo_workspace as any) as $bog_formigo_workspace
 		}
 
 		@$mol_mem
