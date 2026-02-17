@@ -1,0 +1,34 @@
+$bog_formigo_filler $mol_page
+	template $bog_formigo_template
+	submission $bog_formigo_submission
+	ai_suggestions *
+	title <= form_title \
+	tools /
+		<= Progress $mol_view
+			sub /
+				<= progress_text \
+	body /
+		<= Steps $mol_list
+			rows <= step_rows /
+	foot /
+		<= Nav $mol_view
+			sub /
+				<= Back $mol_button_minor
+					title @ \Back
+					click? <=> back? null
+				<= Step_counter $mol_view
+					sub /
+						<= step_counter_text \
+				<= Next $mol_button_major
+					title <= next_title @ \Next
+					click? <=> next? null
+	current_step? 0
+	Step*0 $bog_formigo_filler_step
+		field_def <= step_field* null
+		value? <=> step_value*? \
+		ai_suggestion <= step_ai_suggestion* \
+		apply_suggestion!index <=> apply_suggestion!index null
+	Review_page $mol_view
+		sub /
+			<= Review_title $mol_view
+				sub / @ \Thank you! Your form has been submitted.

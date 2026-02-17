@@ -1,0 +1,38 @@
+$bog_formigo_filler_step $mol_list
+	field_def null
+	value? \
+	ai_suggestion \
+	apply_suggestion!index null
+	rows <= content /
+	Label $mol_view
+		sub /
+			<= label \
+	Hint $mol_view
+		sub /
+			<= hint \
+	Required_badge $mol_view
+		sub /
+			<= required_text \
+	Suggestion $mol_button_minor
+		title <= suggestion_text \
+		click? <=> apply_click? null
+	String_input $mol_string
+		value? <=> value?
+		hint <= hint
+	Textarea_input $mol_textarea
+		value? <=> value?
+		hint <= hint
+	Number_input $mol_number
+		value? <=> number_value? +NaN
+	Check_input $mol_switch
+		value? <=> value?
+		dictionary *
+			yes \Yes
+			no \No
+	Select_input $mol_switch
+		value? <=> value?
+		dictionary <= enum_options *
+	Date_input $mol_date
+		value? <=> value?
+	File_input $mol_attach
+		items? <=> file_items? /string

@@ -1,0 +1,24 @@
+$bog_formigo_ai $mol_list
+	Model? $mol_github_model
+		params * temperature 0
+		rules <= rules \You are a document data extraction assistant. The user uploads images of identity documents (passports, utility bills, ID cards, bank statements). Extract all personal data into structured JSON. Return: {"full_name":"...","first_name":"...","last_name":"...","date_of_birth":"...","nationality":"...","passport_number":"...","id_number":"...","address":"...","city":"...","postal_code":"...","country":"...","phone":"...","email":"...","company":"..."}. Only include fields you can confidently extract. Values should be in the language they appear in the document.
+	extracted? *
+	rows <= content /
+	Title $mol_view
+		sub / @ \AI Document Scanner
+	Docs $mol_attach
+		items? <=> doc_items? /string
+	Extract $mol_button_major
+		title @ \Extract Data
+		click? <=> extract? null
+	Status $mol_status
+		status <= communication null
+	Results $mol_list
+		rows <= result_rows /
+	Result_row*0 $mol_labeler
+		title <= result_key* \
+		Content <= Result_value* $mol_view
+			sub / <= result_val* \
+	Apply_all $mol_button_major
+		title @ \Apply All to Form
+		click? <=> apply_all? null

@@ -1,0 +1,32 @@
+$bog_formigo_detail $mol_page
+	submission $bog_formigo_submission
+	workspace $bog_formigo_workspace
+	title @ \Submission
+	tools /
+		<= Export $mol_button_download
+			blob <= export_blob null
+			file_name <= export_name \form.doc
+			sub /
+				<= Export_icon $mol_icon_download
+				\Export Word
+	body /
+		<= Info $mol_list
+			rows <= info_rows /
+		<= Fields $mol_list
+			rows <= field_rows /
+	Respondent_label $mol_labeler
+		title @ \Respondent
+		Content <= Respondent_value $mol_view
+			sub / <= respondent \
+	Status_label $mol_labeler
+		title @ \Status
+		Content <= Status_value $mol_view
+			sub / <= status \
+	Date_label $mol_labeler
+		title @ \Submitted
+		Content <= Date_value $mol_view
+			sub / <= date_text \
+	Field_row*0 $mol_labeler
+		title <= field_label* \
+		Content <= Field_value*0 $mol_view
+			sub / <= field_value* \
