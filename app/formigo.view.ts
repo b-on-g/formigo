@@ -44,7 +44,6 @@ namespace $.$$ {
 			return this.$.$giper_baza_glob.Pawn(link, $bog_formigo_template)
 		}
 
-		/** Create a submission for filling a template */
 		@$mol_mem_key
 		override submission(id: string) {
 			const template = this.template(id)
@@ -59,16 +58,6 @@ namespace $.$$ {
 		override detail_submission(id: string) {
 			const link = new this.$.$giper_baza_link(id)
 			return this.$.$giper_baza_glob.Pawn(link, $bog_formigo_submission)
-		}
-
-		@$mol_mem_key
-		override fill_link(id: string) {
-			return this.$.$mol_state_arg.link({ fill: id })
-		}
-
-		@$mol_mem
-		override ai_suggestions() {
-			return this.ai_extracted() as any
 		}
 
 		@$mol_action

@@ -1,10 +1,14 @@
 $bog_formigo_builder $mol_page
 	template $bog_formigo_template
-	fill_link \
 	title <= form_title \
 	tools /
 		<= Preview $mol_link
-			uri <= fill_link
+			arg *
+				fill <= template_link
+				template null
+				submissions null
+				submission null
+				settings null
 			sub /
 				<= Preview_icon $mol_icon_eye
 		<= Submissions_link $mol_link

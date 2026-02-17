@@ -8,11 +8,10 @@ $bog_formigo_app $mol_book2
 		template_select!id null
 	builder_page!id $bog_formigo_builder
 		template <= template!id $bog_formigo_template
-		fill_link!id \
 	filler_page!id $bog_formigo_filler
 		template <= template!id
 		submission <= submission!id $bog_formigo_submission
-		ai_suggestions <= ai_suggestions *
+		ai_suggestions <= ai_extracted *
 	submissions_page!id $bog_formigo_submissions
 		template <= template!id
 	detail_page!id $bog_formigo_submissions_detail
