@@ -1,8 +1,6 @@
 namespace $.$$ {
-
 	$mol_style_define($bog_formigo_detail, {
-
-		body: {
+		Body_content: {
 			padding: $mol_gap.block,
 			gap: '1rem',
 		},
@@ -16,18 +14,5 @@ namespace $.$$ {
 			},
 			padding: $mol_gap.block,
 		},
-
-		Field_row: {
-			padding: $mol_gap.text,
-			border: {
-				bottom: {
-					style: 'solid',
-					width: '1px',
-					color: $mol_theme.line,
-				},
-			},
-		},
-
 	})
-
 }

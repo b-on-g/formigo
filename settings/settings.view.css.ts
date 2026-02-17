@@ -1,26 +1,8 @@
 namespace $.$$ {
-
 	$mol_style_define($bog_formigo_settings, {
-
-		body: {
+		Body_content: {
 			padding: $mol_gap.block,
 			gap: '1.5rem',
-		},
-
-		Brand_section: {
-			gap: '1rem',
-		},
-
-		Hue_preview: {
-			padding: $mol_gap.text,
-			font: {
-				size: '.85rem',
-			},
-			opacity: .6,
-		},
-
-		Auth_section: {
-			gap: '1rem',
 		},
 
 		Auth_warning: {
@@ -35,9 +17,6 @@ namespace $.$$ {
 				family: 'monospace',
 				size: '.75rem',
 			},
-			word: {
-				break: 'break-all',
-			},
 			padding: $mol_gap.text,
 			background: {
 				color: $mol_theme.card,
@@ -46,7 +25,5 @@ namespace $.$$ {
 				radius: $mol_gap.round,
 			},
 		},
-
 	})
-
 }
