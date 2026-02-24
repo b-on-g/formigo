@@ -5906,114 +5906,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_state_arg extends $mol_object {
-        prefix;
-        static prolog = '';
-        static separator = ' ';
-        static href(next) {
-            return next || process.argv.slice(2).join(' ');
-        }
-        static href_normal() {
-            return this.link({});
-        }
-        static dict(next) {
-            if (next !== void 0)
-                this.href(this.make_link(next));
-            var href = this.href();
-            var chunks = href.split(' ');
-            var params = {};
-            chunks.forEach(chunk => {
-                if (!chunk)
-                    return;
-                var vals = chunk.split('=').map(decodeURIComponent);
-                params[vals.shift()] = vals.join('=');
-            });
-            return params;
-        }
-        static value(key, next) {
-            if (next === void 0)
-                return this.dict()[key] ?? null;
-            this.href(this.link({ [key]: next }));
-            return next;
-        }
-        static link(next) {
-            const params = {};
-            var prev = this.dict();
-            for (var key in prev) {
-                params[key] = prev[key];
-            }
-            for (var key in next) {
-                params[key] = next[key];
-            }
-            return this.make_link(params);
-        }
-        static make_link(next) {
-            const chunks = [];
-            for (const key in next) {
-                if (next[key] !== null) {
-                    chunks.push([key, next[key]].map(encodeURIComponent).join('='));
-                }
-            }
-            return chunks.join(' ');
-        }
-        static go(next) {
-            this.href(this.link(next));
-        }
-        static commit() { }
-        constructor(prefix = '') {
-            super();
-            this.prefix = prefix;
-        }
-        value(key, next) {
-            return this.constructor.value(this.prefix + key, next);
-        }
-        sub(postfix) {
-            return new this.constructor(this.prefix + postfix + '.');
-        }
-        link(next) {
-            const prefix = this.prefix;
-            const dict = {};
-            for (var key in next) {
-                dict[prefix + key] = next[key];
-            }
-            return this.constructor.link(dict);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_arg, "href", null);
-    __decorate([
-        $mol_mem
-    ], $mol_state_arg, "href_normal", null);
-    __decorate([
-        $mol_mem
-    ], $mol_state_arg, "dict", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_arg, "value", null);
-    __decorate([
-        $mol_action
-    ], $mol_state_arg, "go", null);
-    $.$mol_state_arg = $mol_state_arg;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $giper_baza_log() {
-        return this.$mol_state_arg.value('giper_baza_log') !== null;
-    }
-    $.$giper_baza_log = $giper_baza_log;
-})($ || ($ = {}));
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_time_interval extends $mol_time_base {
@@ -7577,6 +7469,114 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_state_arg extends $mol_object {
+        prefix;
+        static prolog = '';
+        static separator = ' ';
+        static href(next) {
+            return next || process.argv.slice(2).join(' ');
+        }
+        static href_normal() {
+            return this.link({});
+        }
+        static dict(next) {
+            if (next !== void 0)
+                this.href(this.make_link(next));
+            var href = this.href();
+            var chunks = href.split(' ');
+            var params = {};
+            chunks.forEach(chunk => {
+                if (!chunk)
+                    return;
+                var vals = chunk.split('=').map(decodeURIComponent);
+                params[vals.shift()] = vals.join('=');
+            });
+            return params;
+        }
+        static value(key, next) {
+            if (next === void 0)
+                return this.dict()[key] ?? null;
+            this.href(this.link({ [key]: next }));
+            return next;
+        }
+        static link(next) {
+            const params = {};
+            var prev = this.dict();
+            for (var key in prev) {
+                params[key] = prev[key];
+            }
+            for (var key in next) {
+                params[key] = next[key];
+            }
+            return this.make_link(params);
+        }
+        static make_link(next) {
+            const chunks = [];
+            for (const key in next) {
+                if (next[key] !== null) {
+                    chunks.push([key, next[key]].map(encodeURIComponent).join('='));
+                }
+            }
+            return chunks.join(' ');
+        }
+        static go(next) {
+            this.href(this.link(next));
+        }
+        static commit() { }
+        constructor(prefix = '') {
+            super();
+            this.prefix = prefix;
+        }
+        value(key, next) {
+            return this.constructor.value(this.prefix + key, next);
+        }
+        sub(postfix) {
+            return new this.constructor(this.prefix + postfix + '.');
+        }
+        link(next) {
+            const prefix = this.prefix;
+            const dict = {};
+            for (var key in next) {
+                dict[prefix + key] = next[key];
+            }
+            return this.constructor.link(dict);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href_normal", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "dict", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_arg, "value", null);
+    __decorate([
+        $mol_action
+    ], $mol_state_arg, "go", null);
+    $.$mol_state_arg = $mol_state_arg;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $giper_baza_log() {
+        return this.$mol_state_arg.value('giper_baza_log') !== null;
+    }
+    $.$giper_baza_log = $giper_baza_log;
+})($ || ($ = {}));
+
+;
+"use strict";
 var $;
 (function ($) {
     function batch(host, items, task) {
@@ -7622,7 +7622,8 @@ var $;
                 const prev = this._seal_item.get(hash.str);
                 if ($giper_baza_unit_seal.compare(prev, seal) <= 0)
                     continue;
-                if (prev) {
+                if (prev?.alive_items.has(hash.str)) {
+                    seal.alive_items.add(hash.str);
                     prev.alive_items.delete(hash.str);
                     if (!prev.alive_items.size)
                         this.seal_del(prev);
@@ -7669,6 +7670,11 @@ var $;
                 this.unit_seal_inc(sand);
         }
         units_reaping = new Set();
+        unit_reap(unit) {
+            if (!this.mine().units_persisted.has(unit))
+                return;
+            this.units_reaping.add(unit);
+        }
         unit_seal_inc(unit) {
             const seal = this.unit_seal(unit);
             if (!seal)
@@ -7694,7 +7700,7 @@ var $;
                     this._seal_item.delete(hash.str);
                 }
             }
-            this.units_reaping.add(seal);
+            this.unit_reap(seal);
         }
         gift_del(gift) {
             const prev = this._gift.get(gift.mate().str);
@@ -7702,7 +7708,7 @@ var $;
                 return;
             this._gift.delete(gift.mate().str);
             this.faces.peer_summ_shift(gift.lord().peer().str, -1);
-            this.units_reaping.add(gift);
+            this.unit_reap(gift);
             this.unit_seal_dec(gift);
         }
         sand_del(sand) {
@@ -7717,7 +7723,7 @@ var $;
                 return;
             sands.delete(sand.self().str);
             this.faces.peer_summ_shift(sand.lord().peer().str, -1);
-            this.units_reaping.add(sand);
+            this.unit_reap(sand);
             if (sand.signed())
                 this.unit_seal_dec(sand);
         }
@@ -7802,7 +7808,7 @@ var $;
             let part = $giper_baza_pack_part.from([...units]);
             const pack = $giper_baza_pack.make([[this.link().str, part]]);
             part = pack.parts()[0][1];
-            this.diff_apply(part.units, 'skip_load');
+            this.diff_apply(part.units);
         }
         Data(Pawn) {
             return this.Pawn(Pawn).Head($.$giper_baza_land_root.data);
@@ -7900,15 +7906,14 @@ var $;
                 const mass = skipped_units?.size ?? 0;
                 if (mass <= face.summ)
                     continue;
-                if (this.$.$giper_baza_log())
-                    $mol_wire_sync(this.$).$mol_log3_warn({
-                        place: this,
-                        message: 'Fail Summ',
-                        hint: 'Relax and wait for full peer resync',
-                        peer,
-                        mass,
-                        face,
-                    });
+                $mol_wire_sync(this.$).$mol_log3_warn({
+                    place: this,
+                    message: 'Fail Summ',
+                    hint: 'Relax and wait for full peer resync',
+                    peer,
+                    mass,
+                    face,
+                });
                 if (skipped_units)
                     for (const unit of skipped_units)
                         delta.add(unit);
@@ -8247,6 +8252,7 @@ var $;
             this.$.$giper_baza_glob.yard().forget_land(this);
         }
         mine() {
+            $mol_wire_solid();
             return this.$.$giper_baza_mine.land(this.link());
         }
         sync_mine() {
@@ -8398,7 +8404,6 @@ var $;
                     lands.set(seal._land, us = []);
                 const hashes = seal.alive_list();
                 us.push(...hashes);
-                this.seal_del(seal);
             }
             const threads = [...lands.entries()].flatMap(([land, hashes]) => {
                 const auth = land.auth();
@@ -8623,6 +8628,9 @@ var $;
     __decorate([
         $mol_mem
     ], $giper_baza_land.prototype, "sync", null);
+    __decorate([
+        $mol_mem
+    ], $giper_baza_land.prototype, "mine", null);
     __decorate([
         $mol_mem
     ], $giper_baza_land.prototype, "sync_mine", null);
@@ -9667,7 +9675,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$giper_baza_unit_seal_limit = 14;
+    $.$giper_baza_unit_seal_limit = 10;
     class $giper_baza_unit_seal extends $giper_baza_unit_base {
         static length(size) {
             return Math.ceil((84 + size * 12) / 8) * 8;
@@ -10024,8 +10032,9 @@ var $;
             let offset = this.offsets_del.get(data.buffer);
             if (offset === undefined) {
                 offset = this.yym.offsets().get(data.buffer);
-                if (!offset)
-                    return;
+                if (!offset) {
+                    return $mol_fail(new Error('Try to free non saved', { cause: { data, size } }));
+                }
                 this.offsets_del.set(data.buffer, offset);
                 this.yym.pool().release(offset, size);
                 this.yym.offsets().delete(data.buffer);
@@ -10045,10 +10054,12 @@ var $;
     $.$giper_baza_mine_fs_yym_act = $giper_baza_mine_fs_yym_act;
     class $giper_baza_mine_fs_yym extends $mol_object2 {
         sides;
-        pool() {
+        pool(reset) {
+            $mol_wire_solid();
             return new $mol_memory_pool;
         }
-        offsets() {
+        offsets(reset) {
+            $mol_wire_solid();
             return new Map;
         }
         constructor(sides) {
@@ -10058,11 +10069,13 @@ var $;
         destructor() {
             if (!this.sides[1].exists())
                 return;
-            this.sides[1].open('write_only', 'write_only').flush();
+            this.sides[1].open('write_only').flush();
             this.sides[0].exists(false);
+            this.pool(null);
+            this.offsets(null);
         }
         load_init() {
-            const version = (file) => file.modified()?.valueOf() ?? Number.POSITIVE_INFINITY;
+            const version = (file) => file.modified()?.valueOf() ?? 0;
             if (version(this.sides[0]) < version(this.sides[1]))
                 this.sides.reverse();
         }
@@ -10094,7 +10107,15 @@ var $;
             tx2.destructor();
         }
         save_init() {
+            $mol_wire_solid();
             this.load_init();
+            if (this.sides[1].exists()) {
+                $mol_wire_sync(this.$).$mol_log3_rise({
+                    place: this,
+                    message: 'Reset mirror',
+                    file: this.sides[1].path(),
+                });
+            }
             this.sides[0].clone(this.sides[1].path());
         }
         empty() {
@@ -10109,7 +10130,8 @@ var $;
         $mol_mem
     ], $giper_baza_mine_fs_yym.prototype, "offsets", null);
     __decorate([
-        $mol_mem
+        $mol_mem,
+        $mol_action
     ], $giper_baza_mine_fs_yym.prototype, "load_init", null);
     __decorate([
         $mol_mem
@@ -10120,6 +10142,7 @@ var $;
     $.$giper_baza_mine_fs_yym = $giper_baza_mine_fs_yym;
     class $giper_baza_mine_fs extends $giper_baza_mine_temp {
         store() {
+            $mol_wire_solid();
             const land = this.land();
             const area = land.area();
             const root = this.$.$mol_file.relative('.baza');
@@ -26746,28 +26769,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_test_mocks.push(context => {
-        class $mol_state_arg_mock extends $mol_state_arg {
-            static $ = context;
-            static href(next) { return next || ''; }
-            static go(next) {
-                this.href(this.link(next));
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_state_arg_mock, "href", null);
-        __decorate([
-            $mol_action
-        ], $mol_state_arg_mock, "go", null);
-        context.$mol_state_arg = $mol_state_arg_mock;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     $mol_test({
         'triplets'() {
             $mol_assert_equal(new $mol_time_interval('2015-01-01/P1M').end.toString(), '2015-02-01');
@@ -27444,6 +27445,28 @@ var $;
             send() { }
         }
         $.$mol_bus = $mol_bus;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test_mocks.push(context => {
+        class $mol_state_arg_mock extends $mol_state_arg {
+            static $ = context;
+            static href(next) { return next || ''; }
+            static go(next) {
+                this.href(this.link(next));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_state_arg_mock, "href", null);
+        __decorate([
+            $mol_action
+        ], $mol_state_arg_mock, "go", null);
+        context.$mol_state_arg = $mol_state_arg_mock;
     });
 })($ || ($ = {}));
 
