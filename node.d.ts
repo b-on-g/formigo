@@ -1366,6 +1366,7 @@ declare namespace $ {
         constructor(size?: number);
         acquire(size: number): number;
         release(from: number, size: number): void;
+        empty(): boolean;
         acquired(): void;
     }
     export {};
