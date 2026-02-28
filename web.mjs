@@ -8222,8 +8222,12 @@ var $;
                 this.sync_port_lands(port);
         }
         sync_port_lands(port) {
+            const masters = this.masters();
             for (const land of this.port_lands_active(port)) {
-                this.sync_port_land([port, new $giper_baza_link(land)]);
+                const land_link = new $giper_baza_link(land);
+                this.sync_port_land([port, land_link]);
+                for (const master of masters)
+                    this.sync_port_land([master, land_link]);
             }
         }
         ports() {
@@ -9950,7 +9954,7 @@ var $;
             }
             else {
                 this.val();
-                return user.caret()?.split('|').map(chunk => Number(chunk)) ?? [0, 0];
+                return (user.caret()?.split('|').map(chunk => Number(chunk)) ?? [0, 0]);
             }
         }
     }
@@ -10363,13 +10367,21 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$giper_baza_flex_deck_base = new $giper_baza_link('hSVSar1S_he4KVyXM_CftXZh1s');
+    $.$giper_baza_flex_deck_link = new $giper_baza_link('huDNKdza_pspL6e2W_6byvrjHs');
     class $giper_baza_flex_subj extends $giper_baza_dict.with({
         Name: $giper_baza_atom_text,
+        Icon: $giper_baza_atom_text,
+        Hint: $giper_baza_atom_text,
     }, 'Subj') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_U2e5XejQ`);
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_U2e5XejQ`);
         name(next) {
             return this.Name(next)?.val(next) ?? this.link().str;
+        }
+        icon(next) {
+            return this.Icon(next)?.val(next) ?? '💫';
+        }
+        hint(next) {
+            return this.Hint(next)?.val(next) ?? '';
         }
     }
     $.$giper_baza_flex_subj = $giper_baza_flex_subj;
@@ -10377,10 +10389,10 @@ var $;
     }
     $.$giper_baza_flex_subj_link = $giper_baza_flex_subj_link;
     class $giper_baza_flex_meta extends $giper_baza_flex_subj.with({
-        Props: $giper_baza_list_link_to(() => $giper_baza_flex_prop),
         Pulls: $giper_baza_list_link_to(() => $giper_baza_flex_subj),
+        Props: $giper_baza_list_link_to(() => $giper_baza_flex_prop),
     }, 'Meta') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_Atd6Ty7F`);
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_Atd6Ty7F`);
         prop_new(key, type, kind, vars, base) {
             const prop = this.Props(null).make($mol_hash_string(key));
             prop.path(this.name() + ':' + key);
@@ -10433,7 +10445,7 @@ var $;
         Enum: $giper_baza_atom_link_to(() => $giper_baza_list_vary),
         Base: $giper_baza_atom_vary,
     }, 'Prop') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_DOnW7Ah9`);
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_DOnW7Ah9`);
         path(next) {
             return this.Path(next)?.val(next) ?? '';
         }
@@ -10455,14 +10467,16 @@ var $;
         Metas: $giper_baza_list_link_to(() => $giper_baza_flex_meta),
         Types: $giper_baza_list_str,
     }, 'Deck') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_3AvnmQ4q`);
-        meta_new(key) {
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_3AvnmQ4q`);
+        meta_new(key, icon, hint) {
             const meta = this.Metas(null).make($mol_hash_string(key));
             meta.name(key);
+            meta.icon(icon);
+            meta.hint(hint);
             return meta;
         }
-        meta_for(Meta) {
-            const meta = this.meta_new(Meta.path);
+        meta_for(Meta, icon, hint) {
+            const meta = this.meta_new(Meta.path, icon, hint);
             Meta.meta = meta.link();
             return meta;
         }
@@ -10478,7 +10492,7 @@ var $;
         Deck: $giper_baza_atom_link_to(() => $giper_baza_flex_deck),
         Peers: $giper_baza_list_link_to(() => $giper_baza_flex_peer),
     }, 'Seed') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_nrUK4ZIW`);
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_nrUK4ZIW`);
         deck() {
             return this.Deck(null).ensure(this.land());
         }
@@ -10497,7 +10511,7 @@ var $;
         Urls: $giper_baza_list_str,
         Stat: $giper_baza_atom_link_to(() => $giper_baza_app_stat),
     }, 'Peer') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_xEibvNCP`);
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_xEibvNCP`);
         stat(auto) {
             return this.Stat(auto)?.ensure(this.land()) ?? null;
         }
@@ -10515,7 +10529,7 @@ var $;
     class $giper_baza_flex_user extends $giper_baza_flex_subj.with({
         Caret: $giper_baza_atom_text,
     }, 'User') {
-        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_base.str}_csm0VtAK`);
+        static meta = new $giper_baza_link(`${$.$giper_baza_flex_deck_link.str}_csm0VtAK`);
         caret(next) {
             return this.Caret(next)?.val(next) ?? null;
         }
@@ -10531,14 +10545,14 @@ var $;
         const deck = seed.deck();
         deck.name('Base Deck');
         deck.Types(null).items_vary(['vary', 'enum', 'bool', 'int', 'real', 'str', 'link', 'time', 'dict', 'text', 'list']);
-        const Meta = deck.meta_for($giper_baza_flex_meta);
+        const Meta = deck.meta_for($giper_baza_flex_meta, '✨', 'Meta schema of entities');
         Meta.meta(Meta.link());
-        const Subj = deck.meta_for($giper_baza_flex_subj);
-        const Seed = deck.meta_for($giper_baza_flex_seed);
-        const Prop = deck.meta_for($giper_baza_flex_prop);
-        const Deck = deck.meta_for($giper_baza_flex_deck);
-        const Peer = deck.meta_for($giper_baza_flex_peer);
-        const User = deck.meta_for($giper_baza_flex_user);
+        const Subj = deck.meta_for($giper_baza_flex_subj, '💎', 'Named entity');
+        const Seed = deck.meta_for($giper_baza_flex_seed, '🌱', 'Seed of network');
+        const Prop = deck.meta_for($giper_baza_flex_prop, '🔖', 'Property schema');
+        const Deck = deck.meta_for($giper_baza_flex_deck, '📚', 'Collection of Metas');
+        const Peer = deck.meta_for($giper_baza_flex_peer, '🔆', 'Peer of network');
+        const User = deck.meta_for($giper_baza_flex_user, '👤', 'Profile of user');
         seed.meta(Seed.link());
         deck.meta(Deck.link());
         Meta.pull_add(Subj);
@@ -10548,8 +10562,10 @@ var $;
         Peer.pull_add(Subj);
         User.pull_add(Subj);
         Subj.prop_new('Name', 'str', undefined, undefined, '');
-        Meta.prop_new('Props', 'list', Prop);
+        Subj.prop_new('Icon', 'str', undefined, undefined, '💫');
+        Subj.prop_new('Hint', 'str', undefined, undefined, '');
         Meta.prop_new('Pulls', 'list', Meta, deck.Metas());
+        Meta.prop_new('Props', 'list', Prop);
         Seed.prop_new('Deck', 'link', Deck);
         Seed.prop_new('Peers', 'list', Peer);
         Prop.prop_new('Path', 'str');
@@ -11394,13 +11410,13 @@ var $;
             return land.Pawn(Pawn).Head(link.head());
         }
         static Seed() {
-            const link = $giper_baza_flex_deck_base.lord();
+            const link = $giper_baza_flex_deck_link.lord();
             const seed = this.Pawn(link, $giper_baza_flex_seed);
             this.boot();
             return seed;
         }
         static boot() {
-            const file = $mol_file.relative('giper/baza/glob/glob.baza');
+            const file = $mol_file.relative('web.baza');
             const pack = $mol_wire_sync($giper_baza_pack).from(file.buffer());
             this.apply_pack(pack);
         }
@@ -11774,6 +11790,7 @@ var $;
         'page',
         'block',
         'text',
+        'emoji',
         'round',
         'space',
         'blur',
@@ -11784,7 +11801,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_page: 3rem;\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .25rem;\n\t--mol_gap_blur: .5rem;\n}\n");
+    $mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_page: 3rem;\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_emoji: .5rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .25rem;\n\t--mol_gap_blur: .5rem;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -16699,12 +16716,18 @@ var $;
 
 ;
 	($.$giper_baza_link_chip) = class $giper_baza_link_chip extends ($.$mol_link) {
+		icon(){
+			return "";
+		}
 		param(){
 			return "link";
 		}
 		link(){
 			const obj = new this.$.$giper_baza_link();
 			return obj;
+		}
+		sub(){
+			return [(this.icon()), (this.title())];
 		}
 	};
 	($mol_mem(($.$giper_baza_link_chip.prototype), "link"));
@@ -16717,16 +16740,43 @@ var $;
     var $$;
     (function ($$) {
         class $giper_baza_link_chip extends $.$giper_baza_link_chip {
+            subj() {
+                return this.$.$giper_baza_glob.Pawn(this.link(), $giper_baza_flex_subj);
+            }
+            meta() {
+                const link = this.subj().meta();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Pawn(link, $giper_baza_flex_meta);
+            }
+            icon() {
+                const link = this.link();
+                if (!link.str)
+                    return '💢';
+                return this.meta()?.icon() ?? this.subj().icon();
+            }
             title() {
                 const link = this.link();
                 if (!link.str)
                     return '______every______';
-                return this.$.$giper_baza_glob.Pawn(link, $giper_baza_flex_subj).name() || link.str;
+                return this.subj().name() || link.str;
+            }
+            hint() {
+                return this.subj().hint();
             }
             arg() {
                 return { [this.param()]: this.link().str };
             }
         }
+        __decorate([
+            $mol_mem
+        ], $giper_baza_link_chip.prototype, "subj", null);
+        __decorate([
+            $mol_mem
+        ], $giper_baza_link_chip.prototype, "meta", null);
+        __decorate([
+            $mol_mem
+        ], $giper_baza_link_chip.prototype, "icon", null);
         __decorate([
             $mol_mem
         ], $giper_baza_link_chip.prototype, "title", null);
@@ -20225,7 +20275,7 @@ var $;
                 return this.pawn();
             }
             Sub() {
-                const type = this.prop().Type()?.val();
+                const type = this.prop().Type()?.val() ?? 'str';
                 switch (type) {
                     case 'vary': return this.Str();
                     case 'enum': return this.Enum();
@@ -20263,7 +20313,7 @@ var $;
                 return this.pawn(next)?.cast($giper_baza_atom_text).val(next) ?? '';
             }
             str_selection(next) {
-                return this.pawn(next)?.cast($giper_baza_atom_text).selection(this.land().auth().pass().lord(), next);
+                return this.pawn(next)?.cast($giper_baza_atom_text).selection(this.land().auth().pass().lord(), next) ?? [0, 0];
             }
             time(next) {
                 return this.pawn(next)?.cast($giper_baza_atom_time).val(next) ?? null;
@@ -21379,6 +21429,9 @@ var $;
 
 ;
 	($.$giper_baza_land_page) = class $giper_baza_land_page extends ($.$mol_page) {
+		pawn_link(){
+			return (this.pawn().link());
+		}
 		meta_link(){
 			const obj = new this.$.$giper_baza_link();
 			return obj;
@@ -21386,6 +21439,11 @@ var $;
 		Meta_link(){
 			const obj = new this.$.$giper_baza_link_chip();
 			(obj.link) = () => ((this.meta_link()));
+			return obj;
+		}
+		Pawn_link(){
+			const obj = new this.$.$giper_baza_link_chip();
+			(obj.link) = () => ((this.pawn_link()));
 			return obj;
 		}
 		Flex(){
@@ -21469,8 +21527,12 @@ var $;
 			const obj = new this.$.$giper_baza_dict();
 			return obj;
 		}
-		tools(){
-			return [(this.Meta_link())];
+		head(){
+			return [
+				(this.Meta_link()), 
+				(this.Pawn_link()), 
+				(this.Tools())
+			];
 		}
 		body(){
 			return [(this.Flex()), (this.Raw())];
@@ -21481,6 +21543,7 @@ var $;
 	};
 	($mol_mem(($.$giper_baza_land_page.prototype), "meta_link"));
 	($mol_mem(($.$giper_baza_land_page.prototype), "Meta_link"));
+	($mol_mem(($.$giper_baza_land_page.prototype), "Pawn_link"));
 	($mol_mem(($.$giper_baza_land_page.prototype), "Flex"));
 	($mol_mem(($.$giper_baza_land_page.prototype), "Raw_data"));
 	($mol_mem(($.$giper_baza_land_page.prototype), "tine"));
@@ -21598,19 +21661,14 @@ var $;
     var $$;
     (function ($$) {
         class $giper_baza_land_page extends $.$giper_baza_land_page {
-            title() {
-                return '🌍 ' + this.land().link().str;
-            }
             theme() {
                 return this.encrypted() ? '$mol_theme_special' : null;
             }
             encrypted() {
                 return this.land().encrypted();
             }
-            tools() {
-                return [
-                    ...this.pawn().meta() ? [this.Meta_link()] : []
-                ];
+            Meta_link() {
+                return this.pawn().meta() ? super.Meta_link() : null;
             }
             meta_link() {
                 return this.pawn().meta();
@@ -21649,7 +21707,7 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $giper_baza_land_page.prototype, "tools", null);
+        ], $giper_baza_land_page.prototype, "Meta_link", null);
         __decorate([
             $mol_mem
         ], $giper_baza_land_page.prototype, "pack", null);
@@ -21674,10 +21732,10 @@ var $;
                 basis: `60rem`,
                 grow: 1,
             },
-            Title: {
-                font: {
-                    family: 'monospace',
-                }
+            Pawn_link: {
+                flex: {
+                    grow: 1,
+                },
             },
             Size: {
                 padding: $mol_gap.text,
