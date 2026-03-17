@@ -1815,7 +1815,6 @@ declare namespace $ {
         hash_item(index: number, next?: $giper_baza_link): $giper_baza_link;
         _hash_list: readonly $giper_baza_link[];
         hash_list(next?: $giper_baza_link[]): $giper_baza_link[];
-        _shot: $giper_baza_link;
         shot(): $giper_baza_link;
         sign(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
         work(): number;
@@ -7237,7 +7236,7 @@ declare namespace $ {
 //# sourceMappingURL=security.view.tree.d.ts.map
 declare namespace $.$$ {
     class $giper_baza_link_chip extends $.$giper_baza_link_chip {
-        subj(): $giper_baza_flex_subj;
+        subj(): $giper_baza_flex_subj | null;
         meta(): $giper_baza_flex_meta | null;
         icon(): string;
         title(): string;
@@ -7260,6 +7259,9 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=chip.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
 declare namespace $ {
 }
 
@@ -10020,7 +10022,7 @@ declare namespace $.$$ {
         peer_id(lord: $giper_baza_link): string;
         gift_tier(lord: $giper_baza_link, next?: keyof typeof $giper_baza_rank_tier): keyof typeof $giper_baza_rank_tier;
         gift_rate(lord: $giper_baza_link, next?: string): string;
-        add_commit(): void;
+        add_commit(): undefined;
         tier_options(): {
             deny: string;
             read: string;
@@ -12059,7 +12061,7 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $giper_baza_app extends $.$giper_baza_app {
-        auto(): void;
+        auto(): never[];
     }
 }
 
